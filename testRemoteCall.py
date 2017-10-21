@@ -8,7 +8,7 @@ class RemoteCall:
         self.url = link
 		
     def testScaffold(self, line):
-        results = requests.get(self.url+line,headers={'User-Agent': 'Mozilla/5.0'})
+        results = requests.get(self.url+line, headers={'User-Agent': 'Mozilla/5.0'})
         return results.text.strip(), results.status_code
 
 class TestMockServer(unittest.TestCase):
