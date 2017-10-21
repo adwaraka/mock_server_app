@@ -9,13 +9,19 @@ class FileHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET( self ):
+        line = self.path.lstrip("/")
         self._set_headers()
         fileformat = FileFormat()
         paragraph = fileformat.format_file()
         data = {}
+
         for i in xrange(len(paragraph)):
             data[str(i)] = paragraph[i]
-        self.wfile.write(json.dumps(data))
+
+        try:
+            self.wfile.write(json.dumps(data[str(line)]))
+        except KeyError:
+            self.wfile.write(json.dumps(data))
 
 def run():
     server_address = ('127.0.0.1', 3001)
